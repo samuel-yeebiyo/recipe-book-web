@@ -33,9 +33,9 @@ const NewRecipe: React.FunctionComponent = () => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("name", recipeValues.name);
-    recipeValues.ingredients.forEach((element) => {
-      formData.append("ingredients", element);
-    });
+    // recipeValues.ingredients.forEach((element) => {
+    formData.append("ingredients", recipeValues.ingredients[0]);
+    // });
     formData.append("category", recipeValues.category);
     formData.append("directions", recipeValues.directions);
     recipeValues.image && formData.append("image", recipeValues.image);
