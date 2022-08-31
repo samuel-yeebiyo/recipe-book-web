@@ -4,7 +4,7 @@ type Props = {
 
 const LoginButton = (props: Props) => {
   const handleClick = () => {
-    window.open(props.value);
+    window.open(props.value, "_self");
   };
   return (
     <div className=" flex items-center justify-center mt-6">

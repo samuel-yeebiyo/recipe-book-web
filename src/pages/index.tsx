@@ -7,39 +7,53 @@ import Login from "./login";
 import NewRecipe from "./newrecipe";
 import Profile from "./profile";
 
-type ServerData = {
-  data: JSON;
+type User = {
+  avatarURL: string;
+  displayName: string;
+  id: string;
+  provider: string;
+  username: string;
 };
+
+type GetLoginResponse = {
+  data: User[];
+};
+
 const Index = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User>();
 
   useEffect(() => {
     const getUser = () => {
+      console.log("getting user");
       axios
-        .get("http://localhost:8008/auth/login/success", {
+        .get<GetLoginResponse>("http://localhost:8008/auth/login/success", {
           withCredentials: true,
         })
-        .then((response: AxiosResponse<ServerData>) => {
-          console.log(response);
+        //check response object
+        .then((response: AxiosResponse) => {
           if (response.status === 200) {
-            console.log("Response", response);
-            return response.json;
+            return response.data.user;
           }
           throw new Error("authentication failed");
         })
-        .then((resObject) => {
-          setUser(resObject.user);
-          console.log(user);
+        //add user state
+        .then((resObject: User) => {
+          setUser(resObject);
         })
         .catch((error) => {
           console.log(error.message);
         });
     };
+    getUser();
   }, []);
+
   return (
     <HashRouter>
       <Routes>
-        <Route path="/login" element={<Login />}></Route>
+        <Route
+          path="/login"
+          element={!user ? <Login /> : <Navigate to="/" />}
+        ></Route>
         <Route
           path="/"
           element={user ? <Home /> : <Navigate to="/login" />}
