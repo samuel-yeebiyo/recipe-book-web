@@ -1,26 +1,19 @@
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
+import { User, UserContext } from "../components/UserContext";
 
 import Home from "./home";
 import Login from "./login";
 import NewRecipe from "./newrecipe";
 import Profile from "./profile";
 
-type User = {
-  avatarURL: string;
-  displayName: string;
-  id: string;
-  provider: string;
-  username: string;
-};
-
 type GetLoginResponse = {
   data: User[];
 };
 
 const Index = () => {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User | undefined>();
 
   useEffect(() => {
     const getUser = () => {
@@ -49,24 +42,26 @@ const Index = () => {
 
   return (
     <HashRouter>
-      <Routes>
-        <Route
-          path="/login"
-          element={!user ? <Login /> : <Navigate to="/" />}
-        ></Route>
-        <Route
-          path="/"
-          element={user ? <Home /> : <Navigate to="/login" />}
-        ></Route>
-        <Route
-          path="/newrecipe"
-          element={user ? <NewRecipe /> : <Navigate to="/login" />}
-        ></Route>
-        <Route
-          path="/profile"
-          element={user ? <Profile /> : <Navigate to="/login" />}
-        ></Route>
-      </Routes>
+      <UserContext.Provider value={user}>
+        <Routes>
+          <Route
+            path="/login"
+            element={!user ? <Login /> : <Navigate to="/" />}
+          ></Route>
+          <Route
+            path="/"
+            element={user ? <Home /> : <Navigate to="/login" />}
+          ></Route>
+          <Route
+            path="/newrecipe"
+            element={user ? <NewRecipe /> : <Navigate to="/login" />}
+          ></Route>
+          <Route
+            path="/profile"
+            element={user ? <Profile /> : <Navigate to="/login" />}
+          ></Route>
+        </Routes>
+      </UserContext.Provider>
     </HashRouter>
   );
 };

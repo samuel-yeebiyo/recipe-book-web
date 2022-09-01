@@ -1,9 +1,10 @@
 import axios from "axios";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
+import { UserContext } from "../components/UserContext";
 
 interface RecipeData {
   name: string;
-  ingredients: string[];
+  ingredients: string;
   directions: string;
   category: string;
   image: File | null;
@@ -13,13 +14,22 @@ const NewRecipe: React.FunctionComponent = () => {
   const [recipeValues, setRecipeValues] = useState<RecipeData>({
     name: "",
     category: "",
-    ingredients: [""],
+    ingredients: "",
     directions: "",
     image: null,
   });
+  const user = useContext(UserContext);
   useEffect(() => {
     document.title = "Recipes - New";
   });
+  //handle text input
+  const handleTextInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // event.preventDefault();
+    setRecipeValues((prevRecipeValues) => ({
+      ...prevRecipeValues,
+      [event.target.name]: event.target.value || "",
+    }));
+  };
   //handle file input
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -31,23 +41,19 @@ const NewRecipe: React.FunctionComponent = () => {
   // submission
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    console.log(recipeValues);
     const formData = new FormData();
     formData.append("name", recipeValues.name);
     // recipeValues.ingredients.forEach((element) => {
-    formData.append("ingredients", recipeValues.ingredients[0]);
+    formData.append("ingredients", recipeValues.ingredients);
     // });
     formData.append("category", recipeValues.category);
     formData.append("directions", recipeValues.directions);
     recipeValues.image && formData.append("image", recipeValues.image);
-
     const response = await axios.post(
       `${process.env.REACT_APP_API_URI}/postrecipe`,
       formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
+      { withCredentials: true }
     );
     return response.data;
   };
@@ -65,7 +71,9 @@ const NewRecipe: React.FunctionComponent = () => {
             <input
               type="text"
               name="name"
+              value={recipeValues.name}
               className="border-black border-2 rounded-md ml-2"
+              onChange={(event) => handleTextInput(event)}
             />
           </label>
           <label htmlFor="ingredients" className="m-2">
@@ -73,7 +81,9 @@ const NewRecipe: React.FunctionComponent = () => {
             <input
               type="text"
               name="ingredients"
+              value={recipeValues.ingredients}
               className="border-black border-2 rounded-md ml-2"
+              onChange={(event) => handleTextInput(event)}
             />
           </label>
           <label htmlFor="category" className="m-2">
@@ -81,15 +91,20 @@ const NewRecipe: React.FunctionComponent = () => {
             <input
               type="text"
               name="category"
+              value={recipeValues.category}
               className="border-black border-2 rounded-md ml-2"
+              onChange={(event) => handleTextInput(event)}
             />
           </label>
           <label htmlFor="directions" className="m-2">
             Directions:
-            <textarea
+            <input
               // type="text"
+              id="directions"
               name="directions"
+              value={recipeValues.directions}
               className="border-black border-2 rounded-md ml-2 h-24 w-[600px]"
+              onChange={(event) => handleTextInput(event)}
             />
           </label>
           <input
