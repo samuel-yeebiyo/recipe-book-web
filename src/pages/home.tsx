@@ -18,8 +18,10 @@ const Home = () => {
               name={item.name}
               ingredients={item.ingredients}
               directions={item.directions}
+              isFavorite={item.isFavorite}
               image={item.image}
               category={item.category}
+              prepTime={item.prepTime}
             />
             <Divider />
           </>
