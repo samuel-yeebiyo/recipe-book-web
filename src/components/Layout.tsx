@@ -7,9 +7,9 @@ type Props = {
 
 const Layout = ({ children, user }: Props) => {
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-screen">
       {user ? <NavBar user={user} /> : <div></div>}
-      <div className="p-4">{children}</div>
+      <div className="p-4 w-full">{children}</div>
     </div>
   );
 };
