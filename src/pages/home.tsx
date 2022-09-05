@@ -6,7 +6,8 @@ const Home = () => {
   });
   return (
     <div>
-      <p>This is the home page</p>
+      <h1 className="text-3xl">My Recipes</h1>
+      <h3>What would you like to have today?</h3>
     </div>
   );
 };
