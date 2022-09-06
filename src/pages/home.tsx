@@ -15,6 +15,8 @@ const Home = () => {
         return (
           <>
             <RecipeSummary
+              key={index}
+              id={item.id}
               name={item.name}
               ingredients={item.ingredients}
               directions={item.directions}

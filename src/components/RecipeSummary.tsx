@@ -1,6 +1,9 @@
+import axios from "axios";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
+import Button from "./Button";
 
 type Props = {
+  id: string;
   name: string;
   ingredients: string[];
   directions: string;
@@ -11,6 +14,19 @@ type Props = {
 };
 
 const RecipeSummary = (props: Props) => {
+  const handleFav = async () => {
+    console.log("favorited");
+    const response = await axios.put(
+      process.env.REACT_APP_API_URI + "/favoritepost/:id",
+      {
+        id: props.id,
+      },
+      { withCredentials: true }
+    );
+    console.log(response.data);
+    return response.data;
+  };
+
   return (
     <div className="flex p-4">
       {/* left container  */}
@@ -36,10 +52,14 @@ const RecipeSummary = (props: Props) => {
             return <p>- {item}</p>;
           }
         })}
-        ...
+        <Button id={props.id}>Sounds good!</Button>
       </div>
-      <div className="w-1/5 p-4">
-        {props.isFavorite ? <BsHeart size={25} /> : <BsHeartFill size={25} />}
+      <div className="w-1/5 p-4 flex items-end">
+        {props.isFavorite ? (
+          <BsHeart size={25} onClick={() => handleFav()} />
+        ) : (
+          <BsHeartFill size={25} />
+        )}
       </div>
     </div>
   );
