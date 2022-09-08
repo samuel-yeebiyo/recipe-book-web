@@ -11,7 +11,7 @@ const Button = ({ children, id }: Props) => {
     <div>
       <Link
         to={"/recipe/" + id}
-        className="p-1 border-black border-[1px] rounded-lg bg-white "
+        className="p-1 border-black rounded-lg bg-white uppercase"
       >
         {children}
       </Link>
