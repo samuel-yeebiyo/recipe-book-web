@@ -1,12 +1,17 @@
+import { QueryClient, QueryClientProvider } from "react-query";
 import "./App.css";
 import Pages from "./pages";
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
-    <div className="App">
-      {/* <NavBar /> */}
-      <Pages />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className="App">
+        {/* <NavBar /> */}
+        <Pages />
+      </div>
+    </QueryClientProvider>
   );
 }
 

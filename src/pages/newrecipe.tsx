@@ -1,13 +1,13 @@
 import MDEditor from "@uiw/react-md-editor";
 import axios from "axios";
-import React, { FormEvent, useContext, useEffect, useState } from "react";
-import { UserContext } from "../components/UserContext";
+import React, { FormEvent, useEffect, useState } from "react";
 
 interface RecipeData {
   name: string;
   ingredients: string;
   directions: string;
   category: string;
+  prepTime: string;
   image: File | null;
 }
 
@@ -16,10 +16,10 @@ const NewRecipe: React.FunctionComponent = () => {
     name: "",
     category: "",
     ingredients: "",
+    prepTime: "",
     directions: "",
     image: null,
   });
-  const user = useContext(UserContext);
   useEffect(() => {
     document.title = "Recipes - New";
   });
@@ -57,6 +57,7 @@ const NewRecipe: React.FunctionComponent = () => {
     // });
     formData.append("category", recipeValues.category);
     formData.append("directions", recipeValues.directions);
+    formData.append("prepTime", recipeValues.prepTime);
     recipeValues.image && formData.append("image", recipeValues.image);
     const response = await axios.post(
       `${process.env.REACT_APP_API_URI}/postrecipe`,
@@ -87,7 +88,7 @@ const NewRecipe: React.FunctionComponent = () => {
               <input
                 type="text"
                 name="name"
-                placeholder="Jonathan Donaldson"
+                placeholder="Chicken Tika"
                 value={recipeValues.name}
                 className="border-black border-2 rounded-xl ml-2 p-1"
                 onChange={(event) => handleTextInput(event)}
@@ -109,6 +110,26 @@ const NewRecipe: React.FunctionComponent = () => {
                 name="ingredients"
                 placeholder="Ingredients"
                 value={recipeValues.ingredients}
+                className="border-black border-2 rounded-xl ml-2 p-1"
+                onChange={(event) => handleTextInput(event)}
+              />
+            </div>
+          </div>
+          <div className="md:flex md:items-center mb-6">
+            <div className="md:w-1/3">
+              <label
+                htmlFor="prepTime"
+                className="m-2 block font-bold md:text-right mb-1 md:mb-0 pr-4"
+              >
+                Prep Time
+              </label>
+            </div>
+            <div className="md:w-2/3">
+              <input
+                type="text"
+                name="prepTime"
+                placeholder="30 mins"
+                value={recipeValues.prepTime}
                 className="border-black border-2 rounded-xl ml-2 p-1"
                 onChange={(event) => handleTextInput(event)}
               />
