@@ -12,7 +12,7 @@ type Error = {
 const Home = () => {
   const queryClient = useQueryClient();
   useEffect(() => {
-    document.title = "Recipes - Home";
+    document.title = "Lets Feast - Home";
   });
   const { data, isLoading, error } = useQuery("getRecipes", getRecipes);
 

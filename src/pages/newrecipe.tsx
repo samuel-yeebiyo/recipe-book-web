@@ -21,7 +21,7 @@ const NewRecipe: React.FunctionComponent = () => {
     image: null,
   });
   useEffect(() => {
-    document.title = "Recipes - New";
+    document.title = "Let's Feast - New";
   });
   //handle text input
   const handleTextInput = (event: React.ChangeEvent<HTMLInputElement>) => {
