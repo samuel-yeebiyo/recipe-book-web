@@ -19,9 +19,12 @@ const Index = () => {
   useEffect(() => {
     const getUser = () => {
       axios
-        .get<GetLoginResponse>("http://localhost:8008/auth/login/success", {
-          withCredentials: true,
-        })
+        .get<GetLoginResponse>(
+          `${process.env.REACT_APP_API_URI}/auth/login/success`,
+          {
+            withCredentials: true,
+          }
+        )
         //check response object
         .then((response: AxiosResponse) => {
           if (response.status === 200) {
