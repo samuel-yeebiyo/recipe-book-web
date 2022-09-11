@@ -23,7 +23,6 @@ const Home = () => {
   // if (error) {
   //   return <span>Error: {error.message}</span>
   // }
-  console.log(data);
   return (
     <div>
       <h1 className="text-3xl">My Recipes</h1>
@@ -34,7 +33,7 @@ const Home = () => {
               <>
                 <RecipeSummary
                   key={index}
-                  id={item.id}
+                  id={"recipe/" + item.id}
                   name={item.name}
                   ingredients={item.ingredients}
                   directions={item.directions}

@@ -1,18 +1,30 @@
+import { BsApple, BsGoogle, BsTwitter } from "react-icons/bs";
+
 type Props = {
   value: string;
+  children: string;
+  service: string;
 };
 
-const LoginButton = (props: Props) => {
+const LoginButton = ({ value, children, service }: Props) => {
   const handleClick = () => {
-    window.open(props.value, "_self");
+    console.log(value);
+    window.open(value, "_self");
   };
   return (
     <div className=" flex items-center justify-center mt-6">
       <span
-        className="font-extrabold p-4 rounded bg-[#4c8bf5] border-black w-3/4 text-white cursor-grab"
+        className="flex justify-around md:justify-evenly items-center font-extrabold p-2 rounded bg-[#4c8bf5] border-black w-3/4 md:w-1/2 text-white cursor-grab"
         onClick={() => handleClick()}
       >
-        Sign In With Google
+        {service === "Google" ? (
+          <BsGoogle size={15} />
+        ) : service === "Twitter" ? (
+          <BsTwitter size={15} />
+        ) : (
+          <BsApple size={15} />
+        )}
+        {children}
       </span>
     </div>
   );

@@ -15,6 +15,5 @@ export async function getRecipes() {
     baseURL: process.env.REACT_APP_API_URI,
     withCredentials: true,
   });
-  console.log(response.data);
   return response.data;
 }

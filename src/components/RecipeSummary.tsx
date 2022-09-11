@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
-import Button from "./Button";
+import { ButtonAsLink } from "./Buttons/";
 
 type Props = {
   id: string;
@@ -45,14 +45,15 @@ const RecipeSummary = (props: Props) => {
         <h3 className="py-4 text-2xl">{props.name}</h3>
         <div className="flex">
           <span className="bg-green-300 rounded-md p-1">{props.category} </span>
-          <span className="p-1"> | {props.prepTime}</span>
+          <span className="mx-[2px] text-xl font-bold"> | </span>
+          <span className="bg-yellow-300 rounded-md p-1">{props.prepTime}</span>
         </div>
         {props.ingredients.map((item, index) => {
           while (index < 4) {
-            return <p>- {item}</p>;
+            return <p key={index}>- {item}</p>;
           }
         })}
-        <Button id={props.id}>Sounds good!</Button>
+        <ButtonAsLink id={props.id}>Sounds good!</ButtonAsLink>
       </div>
       <div className="w-1/5 p-4 flex items-end">
         {props.isFavorite ? (

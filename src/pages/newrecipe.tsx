@@ -49,7 +49,6 @@ const NewRecipe: React.FunctionComponent = () => {
   // submission
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    console.log(recipeValues);
     const formData = new FormData();
     formData.append("name", recipeValues.name);
     // recipeValues.ingredients.forEach((element) => {
