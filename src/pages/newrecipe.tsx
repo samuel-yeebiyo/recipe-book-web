@@ -1,10 +1,11 @@
 import MDEditor from "@uiw/react-md-editor";
 import axios from "axios";
 import React, { FormEvent, useEffect, useState } from "react";
+import MultipleValueTextInput from "react-multivalue-text-input";
 
 interface RecipeData {
   name: string;
-  ingredients: string;
+  ingredients: string[];
   directions: string;
   category: string;
   prepTime: string;
@@ -15,7 +16,7 @@ const NewRecipe: React.FunctionComponent = () => {
   const [recipeValues, setRecipeValues] = useState<RecipeData>({
     name: "",
     category: "",
-    ingredients: "",
+    ingredients: [],
     prepTime: "",
     directions: "",
     image: null,
@@ -38,6 +39,16 @@ const NewRecipe: React.FunctionComponent = () => {
       directions: content || "",
     }));
   };
+  //handle multiple item input
+  const handleMultiInput = (item, allItems) => {
+    console.log(item);
+    const newIngredient = [...recipeValues.ingredients, item];
+    // console.log(value, allItems[value - 1]);
+    setRecipeValues((prevRecipeValues) => ({
+      ...prevRecipeValues,
+      ingredients: newIngredient,
+    }));
+  };
   //handle file input
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -52,7 +63,7 @@ const NewRecipe: React.FunctionComponent = () => {
     const formData = new FormData();
     formData.append("name", recipeValues.name);
     // recipeValues.ingredients.forEach((element) => {
-    formData.append("ingredients", recipeValues.ingredients);
+    formData.append("ingredients", JSON.stringify(recipeValues.ingredients));
     // });
     formData.append("category", recipeValues.category);
     formData.append("directions", recipeValues.directions);
@@ -104,14 +115,23 @@ const NewRecipe: React.FunctionComponent = () => {
               </label>
             </div>
             <div className="md:w-2/3">
-              <input
+              <MultipleValueTextInput
+                name="ingredients"
+                placeholder="Separate multiple values with a COMMA or ENTER"
+                className="border-black border-2 rounded-xl ml-2 p-1"
+                onItemAdded={(item, allItems) =>
+                  handleMultiInput(item, allItems)
+                }
+                onItemDeleted={(item, allItems) => console.log(`${item}`)}
+              />
+              {/* <input
                 type="text"
                 name="ingredients"
                 placeholder="Ingredients"
                 value={recipeValues.ingredients}
                 className="border-black border-2 rounded-xl ml-2 p-1"
                 onChange={(event) => handleTextInput(event)}
-              />
+              /> */}
             </div>
           </div>
           <div className="md:flex md:items-center mb-6">
