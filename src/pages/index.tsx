@@ -24,6 +24,7 @@ const Index = () => {
           {
             headers: {
               "Access-Control-Allow-Credentials": true,
+              SameSite: "none",
             },
             withCredentials: true,
           }
