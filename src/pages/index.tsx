@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "../components/Layout";
-import { User, UserContext } from "../components/UserContext";
+import { User } from "../components/UserContext";
 
 import Home from "./home";
 import Login from "./login";
@@ -15,7 +15,8 @@ type GetLoginResponse = {
 
 const Index = () => {
   const [user, setUser] = useState<User | undefined>();
-
+  // const [cookies, setCookies] = useCookies();
+  // console.log(cookies);
   useEffect(() => {
     const getUser = () => {
       axios
@@ -49,28 +50,26 @@ const Index = () => {
 
   return (
     <HashRouter>
-      <UserContext.Provider value={user}>
-        <Layout user={user}>
-          <Routes>
-            <Route
-              path="/login"
-              element={!user ? <Login /> : <Navigate to="/" />}
-            ></Route>
-            <Route
-              path="/"
-              element={user ? <Home /> : <Navigate to="/login" />}
-            ></Route>
-            <Route
-              path="/newrecipe"
-              element={user ? <NewRecipe /> : <Navigate to="/login" />}
-            ></Route>
-            <Route
-              path="/profile"
-              element={user ? <Profile /> : <Navigate to="/login" />}
-            ></Route>
-          </Routes>
-        </Layout>
-      </UserContext.Provider>
+      <Layout user={user}>
+        <Routes>
+          <Route
+            path="/login"
+            element={!user ? <Login /> : <Navigate to="/" />}
+          ></Route>
+          <Route
+            path="/"
+            element={user ? <Home /> : <Navigate to="/login" />}
+          ></Route>
+          <Route
+            path="/newrecipe"
+            element={user ? <NewRecipe /> : <Navigate to="/login" />}
+          ></Route>
+          <Route
+            path="/profile"
+            element={user ? <Profile /> : <Navigate to="/login" />}
+          ></Route>
+        </Routes>
+      </Layout>
     </HashRouter>
   );
 };
