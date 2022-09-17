@@ -22,8 +22,8 @@ const Login = () => {
           faster! ⏰
         </p>
       </div>
-      <div className="flex flex-col md:flex-row justify-around items-center h-3/5  w-4/5">
-        <div className="flex flex-col md:w-1/3 md:flex-row items-center justify-center">
+      <div className="flex flex-col md:flex-row justify-around items-center h-3/5 w-[95%] md:w-4/5">
+        <div className="flex flex-col md:w-2/5 md:flex-row items-center justify-center">
           <div className="w-[90%] p-4  rounded-md">
             <UserForm authType={authType} />
             <button

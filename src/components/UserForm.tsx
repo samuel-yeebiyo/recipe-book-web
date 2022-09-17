@@ -47,7 +47,7 @@ const UserForm = ({ authType }: Props) => {
           className="flex flex-col items-center md:items-start md:p-4"
         >
           {authType === "Sign Up" ? (
-            <div className="md:flex md:items-center mb-6">
+            <div className="lg:flex md:items-center mb-6">
               <div className="md:w-1/3">
                 <label
                   htmlFor="name"
@@ -60,7 +60,7 @@ const UserForm = ({ authType }: Props) => {
                 <input
                   type="text"
                   name="name"
-                  placeholder="Edward Elric"
+                  placeholder="Julia Child"
                   value={authValues.name}
                   className="border-black border-2 rounded-lg ml-2 p-1"
                   onChange={(event) => handleTextInput(event)}
@@ -70,7 +70,7 @@ const UserForm = ({ authType }: Props) => {
           ) : (
             <></>
           )}
-          <div className="md:flex md:items-center mb-6">
+          <div className="lg:flex lg:items-center mb-6">
             <div className="md:w-1/3">
               <label
                 htmlFor="email"
@@ -90,7 +90,7 @@ const UserForm = ({ authType }: Props) => {
               />
             </div>
           </div>
-          <div className="md:flex md:items-center mb-6">
+          <div className="lg:flex md:items-center mb-6">
             <div className="md:w-1/3">
               <label
                 htmlFor="password"
