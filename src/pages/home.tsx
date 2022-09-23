@@ -1,19 +1,31 @@
 import { useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
+import { Navigate } from "react-router-dom";
 import { getRecipes } from "../api/recipes";
 import Divider from "../components/Divider";
 import { recipes } from "../components/MockData";
 import RecipeSummary from "../components/RecipeSummary";
+import { User } from "../components/UserContext";
 
 type Error = {
   message: string;
 };
 
-const Home = () => {
+type Props = {
+  user: User;
+};
+
+const Home = ({ user }: Props) => {
   const queryClient = useQueryClient();
   useEffect(() => {
     document.title = "Lets Feast - Home";
   });
+  console.log(user);
+
+  if (!user) {
+    <Navigate to="/login" />;
+  }
+
   const { data, isLoading, error } = useQuery("getRecipes", getRecipes);
 
   if (isLoading) {
