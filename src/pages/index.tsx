@@ -4,7 +4,6 @@ import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "../components/Layout";
 import { User } from "../components/UserContext";
 
-import Home from "./home";
 import Login from "./login";
 import NewRecipe from "./newrecipe";
 import Profile from "./profile";
@@ -23,22 +22,20 @@ const Index = () => {
         .get<GetLoginResponse>(
           `${process.env.REACT_APP_API_URI}/auth/login/success`,
           {
-            headers: {
-              "Access-Control-Allow-Credentials": true,
-              SameSite: "none",
-            },
             withCredentials: true,
           }
         )
         //check response object
         .then((response: AxiosResponse) => {
           if (response.status === 200) {
+            console.log(response.data.user);
             return response.data.user;
           }
           throw new Error("authentication failed");
         })
         //add user state
         .then((resObject: User) => {
+          console.log(resObject);
           setUser(resObject);
         })
         .catch((error) => {
@@ -56,7 +53,10 @@ const Index = () => {
             path="/login"
             element={!user ? <Login /> : <Navigate to="/" />}
           ></Route>
-          <Route path="/" element={<Home user={user} />}></Route>
+          <Route
+            path="/"
+            element={!user ? <Login /> : <Navigate to="/" />}
+          ></Route>
           <Route
             path="/newrecipe"
             element={user ? <NewRecipe /> : <Navigate to="/login" />}
