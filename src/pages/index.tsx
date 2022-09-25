@@ -28,7 +28,7 @@ const Index = () => {
         //check response object
         .then((response: AxiosResponse) => {
           if (response.status === 200) {
-            console.log(response.data.user);
+            // console.log(response.data.user);
             return response.data.user;
           }
           throw new Error("authentication failed");
