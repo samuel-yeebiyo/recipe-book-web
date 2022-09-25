@@ -35,7 +35,7 @@ const Index = () => {
         })
         //add user state
         .then((resObject: User) => {
-          console.log(resObject);
+          // console.log(resObject);
           setUser(resObject);
         })
         .catch((error) => {
