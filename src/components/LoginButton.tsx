@@ -8,7 +8,6 @@ type Props = {
 
 const LoginButton = ({ value, children, service }: Props) => {
   const handleClick = () => {
-    console.log(value);
     window.open(value, "_self");
   };
   return (

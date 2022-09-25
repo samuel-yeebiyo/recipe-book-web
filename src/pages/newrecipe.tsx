@@ -41,7 +41,7 @@ const NewRecipe: React.FunctionComponent = () => {
   };
   //handle multiple item input
   const handleMultiInput = (item, allItems) => {
-    console.log(item);
+    // console.log(item);
     const newIngredient = [...recipeValues.ingredients, item];
     // console.log(value, allItems[value - 1]);
     setRecipeValues((prevRecipeValues) => ({
