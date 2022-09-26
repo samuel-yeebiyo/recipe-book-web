@@ -14,6 +14,7 @@ type GetLoginResponse = {
 
 const Index = () => {
   const [user, setUser] = useState<User | undefined>();
+  const [loading, setLoading] = useState<boolean | undefined>(true);
   // const [cookies, setCookies] = useCookies();
   // console.log(cookies);
   useEffect(() => {
@@ -35,13 +36,27 @@ const Index = () => {
         //add user state
         .then((resObject: User) => {
           setUser(resObject);
+          setLoading(false)
         })
         .catch((error) => {
           console.log(error.message);
+          setLoading(false)
         });
     };
     getUser();
   }, []);
+
+  const Home = () => {
+    return (
+      <div>This is the home page</div>
+    )
+  }
+
+  const Loading = () =>{
+    return (
+      <div>Loading page</div>
+    )
+  }
 
   return (
     <HashRouter>
@@ -49,19 +64,19 @@ const Index = () => {
         <Routes>
           <Route
             path="/login"
-            element={!user ? <Login /> : <Navigate to="/" />}
+            element={loading ? <Loading/> : (!user ? <Login /> : <Navigate to="/" />)}
           ></Route>
           <Route
             path="/"
-            element={!user ? <Login /> : <Navigate to="/" />}
+            element={loading ? <Loading/> : (!user ? <Navigate to="/login"/> : <Home/>)}
           ></Route>
           <Route
             path="/newrecipe"
-            element={user ? <NewRecipe /> : <Navigate to="/login" />}
+            element={loading ? <Loading/> : (user ? <NewRecipe /> : <Navigate to="/login" />)}
           ></Route>
           <Route
             path="/profile"
-            element={user ? <Profile /> : <Navigate to="/login" />}
+            element={loading ? <Loading/> : (user ? <Profile /> : <Navigate to="/login" />)}
           ></Route>
         </Routes>
       </Layout>
